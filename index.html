@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Password Generator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    body {
+      background: linear-gradient(to right, #a18cd1, #fbc2eb);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .navbar {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    .navbar-dark .navbar-nav .nav-link {
+      color: #fff;
+    }
+    .navbar-dark .navbar-nav .nav-link:hover {
+      color: #ffd700;
+    }
+    .card {
+      border: none;
+      border-radius: 1rem;
+      background-color: #ffffffd9;
+    }
+    .card-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #6f42c1;
+    }
+    #password {
+      font-size: 1.1rem;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      background-color: #f0f4ff;
+      border: 1px dashed #ced4da;
+      color: #343a40;
+    }
+    .btn-primary {
+      background-color: #6f42c1;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #5a32a3;
+    }
+    label {
+      font-weight: 500;
+      color: #495057;
+    }
+    .strength {
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      display: inline-block;
+    }
+    footer {
+      background-color: #343a40;
+      color: white;
+      padding: 2rem 1rem;
+    }
+    footer h5 {
+      color: #fbc2eb;
+    }
+    .form-control:focus {
+      border-color: #6f42c1;
+      box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+    }
+    #contact {
+      width: 100%;
+      background-color: #000;
+      color: white;
+      padding: 3rem 1rem;
+    }
+    #contact form {
+      background-color: #111;
+      color: white;
+    }
+    #contact input,
+    #contact textarea {
+      background-color: #222;
+      color: white;
+      border: 1px solid #444;
+    }
+    #contact input::placeholder,
+    #contact textarea::placeholder {
+      color: #aaa;
+    }
+    #contact input:focus,
+    #contact textarea:focus {
+      background-color: #222;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <a class="navbar-brand" href="#">PassGen</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#generator">Generate</a></li>
+        <li class="nav-item"><a class="nav-link" href="#review">Reviews</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-person-circle"></i> Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Password Generator Section -->
+  <div class="container mt-5" id="generator">
+    <div class="card shadow-lg p-5">
+      <h2 class="card-title text-center mb-4">Secure Password Generator</h2>
+      <div class="mb-3">
+        <label for="length">Password Length</label>
+        <input type="number" class="form-control" id="length" min="4" max="32" value="12" />
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="uppercase" checked />
+        <label class="form-check-label" for="uppercase">Include Uppercase</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="lowercase" checked />
+        <label class="form-check-label" for="lowercase">Include Lowercase</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="numbers" checked />
+        <label class="form-check-label" for="numbers">Include Numbers</label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="symbols" checked />
+        <label class="form-check-label" for="symbols">Include Symbols</label>
+      </div>
+      <button class="btn btn-primary w-100" onclick="generatePassword()">Generate Password</button>
+      <div class="mt-4">
+        <label>Your Password</label>
+        <div id="password" class="text-center">Click generate to get password</div>
+        <div id="strength" class="strength mt-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Us Panel -->
+  <div id="contact" class="mt-5">
+    <h3 class="text-center mb-4">Contact Us</h3>
+    <form class="card p-4 shadow-lg mx-auto border-start border-4 border-primary" style="max-width: 750px;">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control rounded-pill px-4" id="name" placeholder="Your Name" required>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control rounded-pill px-4" id="email" placeholder="your@email.com" required>
+      </div>
+      <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        <textarea class="form-control rounded-4 px-4" id="message" rows="5" placeholder="Type your message..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg rounded-pill w-100">Send Message</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center mt-5">
+    <h5>Secure Password Generator</h5>
+    <p>© 2025 All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    function generatePassword() {
+      const length = document.getElementById('length').value;
+      const includeUppercase = document.getElementById('uppercase').checked;
+      const includeLowercase = document.getElementById('lowercase').checked;
+      const includeNumbers = document.getElementById('numbers').checked;
+      const includeSymbols = document.getElementById('symbols').checked;
+
+      const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const lower = 'abcdefghijklmnopqrstuvwxyz';
+      const numbers = '0123456789';
+      const symbols = '!@#$%^&*()_+~|}{[]:;?><,./-=';
+      let chars = '';
+      if (includeUppercase) chars += upper;
+      if (includeLowercase) chars += lower;
+      if (includeNumbers) chars += numbers;
+      if (includeSymbols) chars += symbols;
+
+      if (!chars) {
+        alert('Select at least one character type!');
+        return;
+      }
+
+      let password = '';
+      for (let i = 0; i < length; i++) {
+        password += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+
+      document.getElementById('password').textContent = password;
+      evaluateStrength(password);
+    }
+
+    function evaluateStrength(password) {
+      const strength = document.getElementById('strength');
+      let score = 0;
+      if (password.length >= 8) score++;
+      if (/[A-Z]/.test(password)) score++;
+      if (/[a-z]/.test(password)) score++;
+      if (/[0-9]/.test(password)) score++;
+      if (/[^A-Za-z0-9]/.test(password)) score++;
+
+      const levels = ['Very Weak', 'Weak', 'Moderate', 'Strong', 'Very Strong'];
+      const colors = ['#dc3545', '#fd7e14', '#ffc107', '#198754', '#0d6efd'];
+      strength.textContent = `Strength: ${levels[score - 1] || 'Very Weak'}`;
+      strength.style.backgroundColor = colors[score - 1] || '#ccc';
+      strength.style.color = 'white';
+    }
+  </script>
+
+</body>
+</html>
+
+
